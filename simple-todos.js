@@ -1,3 +1,6 @@
+/* Cloud9 config warnings */
+/* global Tasks Mongo Meteor Session Template */
+
 // simple-todos.js
 Tasks = new Mongo.Collection('tasks');
 
