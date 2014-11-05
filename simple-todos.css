@@ -102,7 +102,7 @@ li.private {
   border-color: #ddd;
 }
 
-header .hide-completed {
+header .hide-completed, .language {
   float: right;
 }
 

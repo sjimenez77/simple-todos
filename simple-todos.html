@@ -9,15 +9,19 @@
       <!-- display the count at the end of the <h1> tag -->
       <h1>{{_ "task_list"}} ({{incompleteCount}})</h1>
       
+      <!-- Language selector -->
+      <label class="language">
+        <select>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </label>
+      
       <!-- add the checkbox to <body> right below the h1 -->
       <label class="hide-completed">
         <input type="checkbox" checked="{{hideCompleted}}" />
         {{_ "hide_completed" }}
         &nbsp;&nbsp;
-        <select name="language" id="language">
-          <option value="en">English</option>
-          <option value="es">Español</option>
-        </select>
       </label>
 
       {{> loginButtons}}

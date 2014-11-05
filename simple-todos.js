@@ -48,7 +48,7 @@ if (Meteor.isClient) {
       Session.set("hideCompleted", event.target.checked);
     },
     // Change language
-    "change .hide-completed select": function (event) {
+    "change .language select": function (event) {
       Session.set("language", event.target.value);
       TAPi18n.setLanguage(event.target.value);
     }
