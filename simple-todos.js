@@ -1,5 +1,5 @@
 /* Cloud9 config warnings */
-/* global Tasks Mongo Meteor Session Template */
+/* global Tasks Mongo Meteor Session Template TAPi18n */
 
 // simple-todos.js
 Tasks = new Mongo.Collection('tasks');
@@ -46,6 +46,11 @@ if (Meteor.isClient) {
     // Add to Template.body.events
     "change .hide-completed input": function (event) {
       Session.set("hideCompleted", event.target.checked);
+    },
+    // Change language
+    "change .hide-completed select": function (event) {
+      Session.set("language", event.target.value);
+      TAPi18n.setLanguage(event.target.value);
     }
   });
 

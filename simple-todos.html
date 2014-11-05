@@ -7,12 +7,17 @@
   <div class="container">
     <header>
       <!-- display the count at the end of the <h1> tag -->
-      <h1>Lista de tareas ({{incompleteCount}})</h1>
+      <h1>{{_ "task_list"}} ({{incompleteCount}})</h1>
       
       <!-- add the checkbox to <body> right below the h1 -->
       <label class="hide-completed">
         <input type="checkbox" checked="{{hideCompleted}}" />
-        Esconder tareas completadas
+        {{_ "hide_completed" }}
+        &nbsp;&nbsp;
+        <select name="language" id="language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
       </label>
 
       {{> loginButtons}}
@@ -20,7 +25,7 @@
       {{#if currentUser}}
       <!-- add a form below the h1 -->
       <form class="new-task">
-        <input type="text" name="text" placeholder="Escriba una tarea y pulse [Intro]" />
+        <input type="text" name="text" placeholder="{{_ 'write_task_placeholder'}}" />
       </form>
       {{/if}}
     </header>
@@ -44,9 +49,9 @@
     {{#if isOwner}}
       <button class="toggle-private">
         {{#if private}}
-          Privada
+          {{_ "private" }}
         {{else}}
-          Pública
+          {{_ "public" }}
         {{/if}}
       </button>
     {{/if}}
