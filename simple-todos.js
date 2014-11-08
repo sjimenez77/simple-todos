@@ -1,5 +1,5 @@
 /* Cloud9 config warnings */
-/* global Tasks Mongo Meteor Session Template TAPi18n */
+/* global Tasks Mongo Meteor Session Template TAPi18n Accounts Tracker */
 
 // simple-todos.js
 Tasks = new Mongo.Collection('tasks');
@@ -24,6 +24,14 @@ if (Meteor.isClient) {
     // Add to Template.body.helpers
     incompleteCount: function () {
       return Tasks.find({checked: {$ne: true}}).count();
+    },
+    // Current language ES
+    esLang: function () {
+      if (Session.get("language") === "es") return "selected";
+    },
+    // Current language EN
+    enLang: function () {
+      if (Session.get("language") === "en") return "selected";
     }
   });
 
@@ -49,8 +57,10 @@ if (Meteor.isClient) {
     },
     // Change language
     "change .language select": function (event) {
-      Session.set("language", event.target.value);
-      TAPi18n.setLanguage(event.target.value);
+      var newLanguage = event.target.value;
+      Session.set("language", newLanguage);
+      TAPi18n.setLanguage(newLanguage);
+      Meteor.call("setUserLanguage", newLanguage);
     }
   });
 
@@ -76,10 +86,21 @@ if (Meteor.isClient) {
       Meteor.call("setPrivate", this._id, ! this.private);
     }
   });
-  
+
   // At the bottom of the client code
   Accounts.ui.config({
     passwordSignupFields: "USERNAME_ONLY"
+  });
+  
+  // Check out if the user logs in
+  Tracker.autorun(function(){
+    if (Meteor.userId()){
+      // Change language
+      var user = Meteor.user();
+      Session.set("language", user.profile.language);
+      TAPi18n.setLanguage(user.profile.language);
+      Meteor.call("setUserLanguage", user.profile.language);
+    }
   });
 }
 
@@ -128,6 +149,12 @@ Meteor.methods({
     }
 
     Tasks.update(taskId, { $set: { private: setToPrivate } });
+  },
+  setUserLanguage: function(language) {
+    // Change user default language    
+    if (Meteor.userId()) {
+      Meteor.users.update(Meteor.userId(), { $set: { "profile.language": language } });
+    }
   }
 });
 
